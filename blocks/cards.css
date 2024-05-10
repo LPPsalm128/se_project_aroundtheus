@@ -3,57 +3,11 @@
   margin-top: 30px;
 }
 
-.card__list {
+.cards__list {
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(auto-fit, 282px);
   grid-gap: 20px 17px;
   padding: 0;
   margin: 0;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  list-style: none;
-  border-radius: 10px;
-}
-
-.card__image {
-  width: 282px;
-  height: 282px;
-  border-radius: 10px 10px 0 0;
-}
-
-.card__description {
-  display: flex;
-  background-color: white;
-  color: black;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 0 0 10px 10px;
-  width: 282px;
-  height: 79px;
-}
-
-.card__like-button {
-  background: transparent url(../images/Vector.png) center no-repeat;
-  width: 21px;
-  height: 18px;
-  border: none;
-  margin-right: 20px;
-}
-
-.card__like-button:hover {
-  background: transparent url(../images/Hoover\ Vector.svg) center no-repeat;
-}
-
-.card__title {
-  font-size: 24px;
-  line-height: 29px;
-  font-weight: 900;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  margin-left: 20px;
 }

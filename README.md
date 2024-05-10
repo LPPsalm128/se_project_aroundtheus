@@ -8,16 +8,26 @@
 
 **Intro**
 
-This project is made so all the elements are displayed correctly on popular screen sizes. We recommend investing more time in completing this project, since it's more difficult than previous ones.
+Here is a project where I had to learn and implement elemnts that would operate on different screen sizes. The webpage needed to be able to shift from a desktop view to a mobile view.
 
-**Figma**
+**Video Explaing process**
 
-- [Link to the project on Figma](https://www.figma.com/file/ii4xxsJ0ghevUOcssTlHZv/Sprint-3%3A-Around-the-US?node-id=0%3A1)
+[Link to video](https://drive.google.com/file/d/1FG72SbCLjYWyJ57W8CmJyoTBaHFL4ttM/view?usp=sharing)
 
 **Images**
 
-The way you'll do this at work is by exporting images directly from Figma — we recommend doing that to practice more. Don't forget to optimize them [here](https://tinypng.com/), so your project loads faster.
+[Preview image](./images/Desktop%20view.png)
 
-Good luck and have fun!
+[Preview image](./images/mobile%20view.png)
 
-Link to video: https://drive.google.com/drive/folders/1FD_BY3cdLqEEGvKE8dMyHOWW9xq2TFEJ?usp=drive_link
+## Project techniques
+
+- Some of the techniques used in this projects were grid layout, BEM, Flexbox, but the most intersting part of this design is it required me to examine a already completed design and learn the specs and implemnet it into my own recreation.
+
+## Plan on improving the project
+
+With each project i want to become more familiar with the tools given to me and beable to handle task at a better pace with less mistakes.
+
+It is my goal to become better at building such projects through muscle memory and pratice.
+
+[Link to project](https://github.com/LPPsalm128/se_project_aroundtheus.git)
