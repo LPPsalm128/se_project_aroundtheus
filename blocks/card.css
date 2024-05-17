@@ -31,6 +31,7 @@
 
 .card__like-button:hover {
   background: transparent url(../images/Hoover\ Vector.svg) center no-repeat;
+  cursor: pointer;
 }
 
 .card__title {
