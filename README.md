@@ -30,4 +30,4 @@ With each project i want to become more familiar with the tools given to me and 
 
 It is my goal to become better at building such projects through muscle memory and pratice.
 
-[Link to project](https://github.com/LPPsalm128/se_project_aroundtheus.git)
+[Link to project](https://lppsalm128.github.io/se_project_aroundtheus/)

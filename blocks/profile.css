@@ -31,9 +31,8 @@
 }
 
 .profile__edit-button:hover {
-  background: url(../images/Hoover\ Edit\ Button.svg) center no-repeat;
   cursor: pointer;
-  border-color: #999;
+  opacity: 60%;
 }
 
 .profile__add-button {
@@ -46,9 +45,7 @@
 }
 
 .profile__add-button:hover {
-  background: transparent url(../images/Hoover\ Add\ Button.svg) center
-    no-repeat;
-  border-color: #999;
+  opacity: 60%;
   cursor: pointer;
 }
 
@@ -110,7 +107,6 @@
   .profile__edit-button {
     width: 18px;
     height: 18px;
-    border: 1px solid white;
     margin-left: 10px;
     margin-top: 0;
     margin-bottom: 0;
