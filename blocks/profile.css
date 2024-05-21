@@ -22,7 +22,7 @@
 }
 
 .profile__edit-button {
-  background: transparent url(../images/edit\ button.svg) center no-repeat;
+  background: transparent url(../images/edit.svg) center no-repeat;
   width: 24px;
   height: 24px;
   grid-area: button;
@@ -36,7 +36,7 @@
 }
 
 .profile__add-button {
-  background: transparent url(../images/Add\ Button.svg) center no-repeat;
+  background: transparent url(../images/add.svg) center no-repeat;
   width: 150px;
   height: 50px;
   margin-left: auto;
@@ -74,7 +74,7 @@
   max-width: 300px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 880px) {
+@media screen and (min-width: 320px) and (max-width: 900px) {
   .profile {
     flex-direction: column;
     margin: 0;
@@ -115,7 +115,7 @@
   .profile__paragraph {
     font-size: 14px;
     line-height: 17px;
-    min-width: 282px;
+    min-width: 700px;
     text-align: center;
   }
 
