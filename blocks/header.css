@@ -1,12 +1,12 @@
 .header {
-  background: transparent url(../images/header.svg) center no-repeat;
+  background: transparent url(../images/heading.svg) center no-repeat;
   height: 74px;
   margin-top: 45px;
 }
 
-@media screen and (min-width: 320px) and (max-width: 880px) {
+@media screen and (min-width: 320px) and (max-width: 900px) {
   .header {
-    background: transparent url(../images/Header-Mobile.svg) center no-repeat;
+    background: transparent url(../images/headerm.svg) center no-repeat;
     margin-top: 28px;
   }
 }

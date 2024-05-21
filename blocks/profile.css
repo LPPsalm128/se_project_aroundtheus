@@ -119,6 +119,24 @@
     text-align: center;
   }
 
+  @media screen and (max-width: 736px) {
+    .profile__paragraph {
+      min-width: 513px;
+    }
+  }
+
+  @media screen and (max-width: 530px) {
+    .profile__paragraph {
+      min-width: 307px;
+    }
+  }
+
+  @media screen and (max-width: 335px) {
+    .profile__paragraph {
+      min-width: 282px;
+    }
+  }
+
   .profile__add-button {
     margin: 0;
     width: 282px;
