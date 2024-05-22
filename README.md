@@ -16,9 +16,11 @@ Here is a project where I had to learn and implement elemnts that would operate 
 
 **Images**
 
-[Preview image](./images/Desktop%20view.png)
+[Preview image](./images/Desktop-view.png)
 
-[Preview image](./images/mobile%20view.png)
+[Preview image](./images/mobile-view.png)
+
+[Preview image](./images/mobile-view2.png)
 
 ## Project techniques
 
