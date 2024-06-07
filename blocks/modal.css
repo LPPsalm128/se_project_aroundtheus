@@ -6,12 +6,16 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-  display: flex;
   padding: 0 19px;
+  display: none;
 }
 
 .modal__opened {
   display: flex;
+}
+
+.modal__closed {
+  display: none;
 }
 
 .modal__container {
@@ -97,7 +101,11 @@
   position: absolute;
   bottom: calc(100% + 5px);
   left: calc(100% + 5px);
+}
+
+.modal__close:hover {
   cursor: pointer;
+  opacity: 60%;
 }
 
 @media screen and (min-width: 320px) and (max-width: 580px) {
