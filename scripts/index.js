@@ -25,17 +25,55 @@ const initialCards = [
   },
 ];
 
-/*       elements                   */
+// Elements
 
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
+const modalCloseButton = document.querySelector("#modal-close-button");
+const profileHeader = document.querySelector(".profile__header");
+const profileParagraph = document.querySelector(".profile__paragraph");
+const profileHeaderInput = document.querySelector(".modal__form-header");
+const profileParagraphInput = document.querySelector(".modal__form-paragraph");
+const profileEditForm = profileEditModal.querySelector(".modal__form");
+const cardsList = document.querySelector(".cards__list");
+const cardTemplate =
+  document.querySelector("#card-template").content.firstElementChild;
+
+// Functions
+
+function closePopup() {
+  profileEditModal.classList.remove("modal_opened");
+}
+
+// Event Handler
+
+function handleProfileEditSubmit(e) {
+  e.preventDefault();
+  profileHeader.textContent = profileHeaderInput.value;
+  profileParagraph.textContent = profileParagraphInput.value;
+  closePopup();
+  console.log("form submitted");
+}
+
+// Event Listeners
 
 profileEditButton.addEventListener("click", () => {
-  profileEditModal.classList.add("modal__opened");
+  profileHeaderInput.value = profileHeader.textContent;
+  profileParagraphInput.value = profileParagraph.textContent;
+  profileEditModal.classList.add("modal_opened");
 });
 
-const modalCloseButton = document.querySelector("#modal-close-button");
+modalCloseButton.addEventListener("click", closePopup);
 
-modalCloseButton.addEventListener("click", (e) => {
-  profileEditModal.classList.add("modal__closed");
+profileEditForm.addEventListener("submit", handleProfileEditSubmit);
+
+initialCards.forEach((cardData) => {
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardImage = cardElement.querySelector(".card__image");
+  const cardTitle = cardElement.querySelector(".card__title");
+
+  cardTitle.textContent = cardData.name;
+
+  // return cardElement;
+  cardsList.append(cardElement);
 });

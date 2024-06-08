@@ -10,12 +10,8 @@
   display: none;
 }
 
-.modal__opened {
+.modal_opened {
   display: flex;
-}
-
-.modal__closed {
-  display: none;
 }
 
 .modal__container {
