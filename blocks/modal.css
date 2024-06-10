@@ -107,19 +107,16 @@
   .modal__form {
     width: 238px;
     margin-left: 22px;
+    margin-bottom: 75px;
   }
 
-  .modal__form-header {
-    margin-top: 75px;
-  }
-
-  .modal__form-paragraph {
-    margin-top: 30px;
+  .modal__input {
+    margin-bottom: 30px;
   }
 
   .modal__button {
     height: 46px;
-    margin-top: 45px;
+    margin-top: 15px;
     margin-bottom: 25px;
   }
 
