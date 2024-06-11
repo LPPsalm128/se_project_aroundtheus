@@ -82,5 +82,5 @@ profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 
 initialCards.forEach((cardData) => {
   const cardElement = getCardElement(cardData);
-  cardsList.prepend(cardElement);
+  cardsList.append(cardElement);
 });
