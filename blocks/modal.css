@@ -45,6 +45,7 @@
 }
 
 .modal__input {
+  font-family: "Inter", Arial, Verdana, sans-serif;
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   margin-bottom: 29px;
@@ -125,6 +126,6 @@
     width: 26px;
     height: 26px;
     bottom: calc(100% + 13.62px);
-    left: calc(0% + 245.62px);
+    left: calc(3% + 245.62px);
   }
 }
