@@ -30,6 +30,6 @@ Here is a project where I had to learn and implement elemnts that would operate 
 
 With each project i want to become more familiar with the tools given to me and beable to handle task at a better pace with less mistakes.
 
-It is my goal to become better at building such projects through muscle memory and pratice.
+It is my goal to become better at building such projects through muscle memory and practice.
 
 [Link to project](https://lppsalm128.github.io/se_project_aroundtheus/)
