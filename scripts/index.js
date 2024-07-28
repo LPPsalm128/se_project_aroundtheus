@@ -50,14 +50,10 @@ const imageModalCloseButton = pictureModal.querySelector("#modal-close-button");
 const addCardModalCloseButton = addCardModal.querySelector(
   "#modal-close-button"
 );
-const addCardFormElement = addCardModal.querySelector(".modal__form");
+const addCardFormElement = document.querySelector("#add-card-modal");
 
-const cardTitleInput = addCardFormElement.querySelector(
-  ".modal__input_type-title"
-);
-const cardLinkInput = addCardFormElement.querySelector(
-  ".modal__input_type-link"
-);
+const cardTitleInput = addCardFormElement.querySelector("#title-input");
+const cardLinkInput = addCardFormElement.querySelector("#link-input");
 
 const modals = document.querySelectorAll(".modal");
 modals.forEach((modal) => {
@@ -70,23 +66,29 @@ modals.forEach((modal) => {
 
 // Functions
 
-function openModal(modal) {
-  modal.classList.add("modal_opened");
-  document.addEventListener("keydown", closePopupEsc);
-  modal.addEventListener("mousedown", closeModalOnRemoteClick);
-}
-
-function closePopup(modal) {
-  modal.classList.remove("modal_opened");
-  document.removeEventListener("keydown", closePopupEsc);
-  modal.removeEventListener("mousedown", closeModalOnRemoteClick);
-}
-
 function closePopupEsc(e) {
   if (e.key === "Escape") {
     const modalOpened = document.querySelector(".modal_opened");
     closePopup(modalOpened);
   }
+}
+
+function closePopupOverlay(e) {
+  if (e.target === e.currentTarget) {
+    closePopup(e.currentTarget);
+  }
+}
+
+function openModal(modal) {
+  modal.classList.add("modal_opened");
+  document.addEventListener("keydown", closePopupEsc);
+  modal.addEventListener("mousedown", closePopupOverlay);
+}
+
+function closePopup(modal) {
+  modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", closePopupEsc);
+  modal.removeEventListener("mousedown", closePopupOverlay);
 }
 
 function renderCard(cardData, wrapper) {
