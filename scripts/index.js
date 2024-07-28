@@ -35,7 +35,7 @@ const profileModalCloseButton = profileEditModal.querySelector(
 const profileHeader = document.querySelector(".profile__header");
 const profileParagraph = document.querySelector(".profile__paragraph");
 const profileHeaderInput = document.querySelector("#header-input");
-const profileParagraphInput = document.querySelector("#paragraph");
+const profileParagraphInput = document.querySelector("#paragraph-input");
 const profileEditForm = profileEditModal.querySelector(".modal__form");
 
 const cardsWrap = document.querySelector(".cards__list");
