@@ -59,14 +59,34 @@ const cardLinkInput = addCardFormElement.querySelector(
   ".modal__input_type-link"
 );
 
-// Functions
+const modals = document.querySelectorAll(".modal");
+modals.forEach((modal) => {
+  modal.addEventListener("click", (e) => {
+    if (e.target.classList.contains("modal_opened")) {
+      closePopup(modal);
+    }
+  });
+});
 
-function closePopup(modal) {
-  modal.classList.remove("modal_opened");
-}
+// Functions
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("keydown", closePopupEsc);
+  modal.addEventListener("mousedown", closeModalOnRemoteClick);
+}
+
+function closePopup(modal) {
+  modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", closePopupEsc);
+  modal.removeEventListener("mousedown", closeModalOnRemoteClick);
+}
+
+function closePopupEsc(e) {
+  if (e.key === "Escape") {
+    const modalOpened = document.querySelector(".modal_opened");
+    closePopup(modalOpened);
+  }
 }
 
 function renderCard(cardData, wrapper) {
