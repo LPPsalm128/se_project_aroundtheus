@@ -56,13 +56,6 @@ const cardTitleInput = addCardFormElement.querySelector("#title-input");
 const cardLinkInput = addCardFormElement.querySelector("#link-input");
 
 const modals = document.querySelectorAll(".modal");
-modals.forEach((modal) => {
-  modal.addEventListener("click", (e) => {
-    if (e.target.classList.contains("modal_opened")) {
-      closePopup(modal);
-    }
-  });
-});
 
 // Functions
 
@@ -127,11 +120,6 @@ function getCardElement(cardData) {
 }
 
 // Event Handler
-
-function handleImageClick(e) {
-  e.preventDefault();
-  closePopup(pictureModal);
-}
 
 function handleProfileEditSubmit(e) {
   e.preventDefault();

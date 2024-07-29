@@ -70,8 +70,7 @@ function toogleButtonState(
 //-------Event Listeners--------
 
 function setEventListners(formElement, options) {
-  const { inputSelector } = options;
-  const { submitButtonSelector } = options;
+  const { inputSelector, submitButtonSelector } = options;
   const inputElements = Array.from(formElement.querySelectorAll(inputSelector));
   const submitButton = formElement.querySelector(submitButtonSelector);
   inputElements.forEach((inputElement) => {
