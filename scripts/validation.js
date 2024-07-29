@@ -26,22 +26,6 @@ function hideInputError(
   errorMessageElement.classList.remove(errorClass);
 }
 
-//---Button Functions-----
-
-function enableButtton(submitButton) {
-  const { inactiveButtonClass } = config;
-  submitButton.classList.add(inactiveButtonClass);
-  submitButton.disabled = true;
-  return;
-}
-
-function disableButton(submitButton) {
-  const { inactiveButtonClass } = config;
-  submitButton.classList.remove(inactiveButtonClass);
-  submitButton.disabled = false;
-  return;
-}
-
 //------Validity Functions-----
 
 function checkInputValidity(formElement, inputElement, options) {
@@ -61,10 +45,26 @@ function toogleButtonState(
   { inactiveButtonClass }
 ) {
   if (hasInvalidInputs(inputElements)) {
-    enableButtton(submitButton);
+    enableButtton(submitButton, config);
   } else {
-    disableButton(submitButton);
+    disableButton(submitButton, config);
   }
+}
+
+//---Button Functions-----
+
+function enableButtton(submitButton, config) {
+  const { inactiveButtonClass } = config;
+  submitButton.classList.add(inactiveButtonClass);
+  submitButton.disabled = true;
+  return;
+}
+
+function disableButton(submitButton, config) {
+  const { inactiveButtonClass } = config;
+  submitButton.classList.remove(inactiveButtonClass);
+  submitButton.disabled = false;
+  return;
 }
 
 //-------Event Listeners--------
