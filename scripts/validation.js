@@ -39,11 +39,7 @@ function hasInvalidInputs(inputList) {
   return !inputList.every((inputElement) => inputElement.validity.valid);
 }
 
-function toogleButtonState(
-  inputElements,
-  submitButton,
-  { inactiveButtonClass }
-) {
+function toogleButtonState(inputElements, submitButton, config) {
   if (hasInvalidInputs(inputElements)) {
     enableButtton(submitButton, config);
   } else {
