@@ -39,7 +39,7 @@ function hasInvalidInputs(inputList) {
   return !inputList.every((inputElement) => inputElement.validity.valid);
 }
 
-function toogleButtonState(inputElements, submitButton, config) {
+function toggleButtonState(inputElements, submitButton, config) {
   if (hasInvalidInputs(inputElements)) {
     enableButtton(submitButton, config);
   } else {
@@ -72,7 +72,7 @@ function setEventListners(formElement, options) {
   inputElements.forEach((inputElement) => {
     inputElement.addEventListener("input", (e) => {
       checkInputValidity(formElement, inputElement, options);
-      toogleButtonState(inputElements, submitButton, options);
+      toggleButtonState(inputElements, submitButton, options);
     });
   });
 }
