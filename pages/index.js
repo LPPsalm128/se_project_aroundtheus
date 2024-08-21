@@ -38,6 +38,21 @@ const config = {
   errorClass: "modal__error_visible",
 };
 
+//Template for ID
+const cardData = {
+  name: "Yosemite Valley",
+  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
+};
+
+const cardSelector = "#card-template";
+
+// Elements
+const profileEditButton = document.querySelector("#profile-edit-button");
+const profileEditModal = document.querySelector("#profile-edit-modal");
+const profileModalCloseButton = profileEditModal.querySelector(
+  "#modal-close-button"
+);
+
 //Validation Elements
 const addCardFormElement = document.querySelector("#add-card-modal");
 const profileEditForm = profileEditModal.querySelector("#edit-profile-form");
@@ -48,15 +63,6 @@ editFormValidator.enableValidation();
 const addCardValidator = new FormValidator(config, addCardFormElement);
 addCardValidator.enableValidation();
 
-//Template for ID
-const cardSelector = "#card-template";
-
-// Elements
-const profileEditButton = document.querySelector("#profile-edit-button");
-const profileEditModal = document.querySelector("#profile-edit-modal");
-const profileModalCloseButton = profileEditModal.querySelector(
-  "#modal-close-button"
-);
 const profileHeader = document.querySelector(".profile__header");
 const profileParagraph = document.querySelector(".profile__paragraph");
 const profileHeaderInput = document.querySelector("#header-input");
@@ -107,11 +113,6 @@ function closePopup(modal) {
   modal.removeEventListener("mousedown", closePopupOverlay);
 }
 
-function createCard(item) {
-  const card = new Card(item, "#card-template", handleImageClick);
-  return card.getView();
-}
-
 // Card Element
 /*function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
@@ -142,6 +143,11 @@ function createCard(item) {
 
   return cardElement;
 }*/
+
+function createCard(item) {
+  const card = new Card(item, cardSelector, handleImageClick);
+  return card.getView();
+}
 
 function renderCard(cardData, wrapper) {
   const cardElement = createCard(cardData);
@@ -196,4 +202,5 @@ profileModalCloseButton.addEventListener("click", () =>
 profileEditForm.addEventListener("submit", handleProfileEditSubmit);
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 
+//Initial render
 initialCards.forEach((cardData) => renderCard(cardData, cardsWrap));

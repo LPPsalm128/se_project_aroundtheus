@@ -31,10 +31,12 @@ export default class Card {
         this._handleDeleteCard();
       });
 
-    //card image
-    this._cardImageElement.addEventListener("click", () => {
-      this._handleImageClick(this._name, this._link);
-    });
+    //Card Image
+    this._cardElement
+      .querySelector(".card__image")
+      .addEventListener("click", () => {
+        this._handleImageClick(this._name, this._link);
+      });
   }
 
   // private methods for like and delete button handlers
@@ -52,19 +54,15 @@ export default class Card {
   //public method to return card
   getView() {
     this._cardElement = this._getTemplate();
-    this._cardElement = document
-      .querySelector(this._cardSelector)
-      .content.querySelector(".card")
-      .cloneNode(true);
 
-    // populate the card with image and title with provided data
+    // Populate the card with image and title with provided data
     const cardImage = this._cardElement.querySelector(".card__image");
     const cardTitle = this._cardElement.querySelector(".card__title");
     cardImage.src = this._link;
     cardImage.alt = this._name;
     cardTitle.textContent = this._name;
 
-    // invoke event listeners
+    // Invoke EventListeners
     this._setEventListeners();
 
     return this._cardElement;
