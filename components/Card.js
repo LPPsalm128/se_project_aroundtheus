@@ -6,6 +6,15 @@ export default class Card {
     this._handleImageClick = handleImageClick;
   }
 
+  _getTemplate() {
+    const cardElement = document
+      .querySelector(this._cardSelector)
+      .content.querySelector(".card")
+      .cloneNode(true);
+
+    return cardElement;
+  }
+
   // Set Eventlisteners
   //Like Button
   _setEventListeners() {
@@ -42,6 +51,7 @@ export default class Card {
 
   //public method to return card
   getView() {
+    this._cardElement = this._getTemplate();
     this._cardElement = document
       .querySelector(this._cardSelector)
       .content.querySelector(".card")
