@@ -1,3 +1,6 @@
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -25,8 +28,30 @@ const initialCards = [
   },
 ];
 
-// Elements
+//Validaiton Settings
+const config = {
+  formSelector: ".modal__form",
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
 
+//Validation Elements
+const addCardFormElement = document.querySelector("#add-card-modal");
+const profileEditForm = profileEditModal.querySelector("#edit-profile-form");
+
+const editFormValidator = new FormValidator(config, profileEditForm);
+editFormValidator.enableValidation();
+
+const addCardValidator = new FormValidator(config, addCardFormElement);
+addCardValidator.enableValidation();
+
+//Template for ID
+const cardSelector = "#card-template";
+
+// Elements
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileModalCloseButton = profileEditModal.querySelector(
@@ -36,7 +61,6 @@ const profileHeader = document.querySelector(".profile__header");
 const profileParagraph = document.querySelector(".profile__paragraph");
 const profileHeaderInput = document.querySelector("#header-input");
 const profileParagraphInput = document.querySelector("#paragraph-input");
-const profileEditForm = profileEditModal.querySelector(".modal__form");
 
 const cardsWrap = document.querySelector(".cards__list");
 const cardTemplate =
@@ -50,7 +74,6 @@ const imageModalCloseButton = pictureModal.querySelector("#modal-close-button");
 const addCardModalCloseButton = addCardModal.querySelector(
   "#modal-close-button"
 );
-const addCardFormElement = document.querySelector("#add-card-modal");
 
 const cardTitleInput = addCardFormElement.querySelector("#title-input");
 const cardLinkInput = addCardFormElement.querySelector("#link-input");
@@ -84,12 +107,13 @@ function closePopup(modal) {
   modal.removeEventListener("mousedown", closePopupOverlay);
 }
 
-function renderCard(cardData, wrapper) {
-  const cardElement = getCardElement(cardData);
-  wrapper.prepend(cardElement);
+function createCard(item) {
+  const card = new Card(item, "#card-template", handleImageClick);
+  return card.getView();
 }
 
-function getCardElement(cardData) {
+// Card Element
+/*function getCardElement(cardData) {
   const cardElement = cardTemplate.cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardTitle = cardElement.querySelector(".card__title");
@@ -117,6 +141,11 @@ function getCardElement(cardData) {
   cardImage.alt = cardData.name;
 
   return cardElement;
+}*/
+
+function renderCard(cardData, wrapper) {
+  const cardElement = createCard(cardData);
+  wrapper.prepend(cardElement);
 }
 
 // Event Handler
@@ -135,6 +164,15 @@ function handleAddCardFormSubmit(e) {
   renderCard({ name, link }, cardsWrap);
   e.target.reset();
   closePopup(addCardModal);
+  addCardValidator.resetValidation();
+  addCardValidator.disableSubmitButton();
+}
+
+function handleImageClick(cardData) {
+  modalImage.src = cardData.link;
+  modalImage.alt = cardData.name;
+  modalImageCaption.textContent = cardData.name;
+  openModal(pictureModal);
 }
 
 // Event Listeners
@@ -147,6 +185,7 @@ addCardModalCloseButton.addEventListener("click", () =>
 );
 
 profileEditButton.addEventListener("click", () => {
+  editFormValidator.resetValidation();
   profileHeaderInput.value = profileHeader.textContent;
   profileParagraphInput.value = profileParagraph.textContent;
   openModal(profileEditModal);
