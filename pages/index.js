@@ -70,7 +70,7 @@ const profileParagraphInput = document.querySelector("#paragraph-input");
 
 const cardsWrap = document.querySelector(".cards__list");
 const cardTemplate =
-  document.querySelector(".card-template").content.firstElementChild;
+  document.querySelector("#card-template").content.firstElementChild;
 const addNewCardButton = document.querySelector(".profile__add-button");
 const addCardModal = document.querySelector("#add-card-modal");
 const pictureModal = document.querySelector("#picture-modal");
