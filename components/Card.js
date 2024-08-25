@@ -51,6 +51,13 @@ export default class Card {
     this._cardElement = null;
   }
 
+  _handleImageClick(cardData) {
+    modalImage.src = cardData.link;
+    modalImage.alt = cardData.name;
+    modalImageCaption.textContent = cardData.name;
+    this._setEventListeners();
+  }
+
   //public method to return card
   getView() {
     this._cardElement = this._getTemplate();

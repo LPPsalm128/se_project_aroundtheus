@@ -129,15 +129,15 @@ function closePopup(modal) {
     cardElement.remove();
   });
 
-  cardImage.addEventListener("click", () => {
-    openModal(pictureModal);
-    modalImage.src = cardData.link;
-    modalImage.alt = cardData.name;
-    modalImageCaption.textContent = cardData.name;
-    return modalImageCaption;
-  });
+cardImage.addEventListener("click", () => {
+  openModal(pictureModal);
+  modalImage.src = cardData.link;
+  modalImage.alt = cardData.name;
+  modalImageCaption.textContent = cardData.name;
+  return modalImageCaption;
+});
 
-  cardTitle.textContent = cardData.name;
+ cardTitle.textContent = cardData.name;
   cardImage.src = cardData.link;
   cardImage.alt = cardData.name;
 
@@ -175,8 +175,8 @@ function handleAddCardFormSubmit(e) {
 }
 
 function handleImageClick(cardData) {
-  modalImage.src = cardData.link;
   modalImage.alt = cardData.name;
+  modalImage.src = cardData.link;
   modalImageCaption.textContent = cardData.name;
   openModal(pictureModal);
 }
