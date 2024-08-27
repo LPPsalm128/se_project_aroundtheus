@@ -161,8 +161,6 @@ function handleProfileEditSubmit(e) {
   profileHeader.textContent = profileHeaderInput.value;
   profileParagraph.textContent = profileParagraphInput.value;
   closePopup(profileEditModal);
-  editFormValidator.resetValidation();
-  editFormValidator.disableSubmitButton();
 }
 
 function handleAddCardFormSubmit(e) {
