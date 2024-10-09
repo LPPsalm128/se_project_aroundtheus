@@ -1,73 +1,32 @@
-import Card from "../components/Card.js";
+// Import files
+import "./index.css";
+import { initialCards, config } from "../utils/constants.js";
+import Card from "../components/card.js";
 import FormValidator from "../components/FormValidator.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import UserInfo from "../components/UserInfo.js";
+import Section from "../components/Section.js";
 
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-  },
-  {
-    name: "Lake Louise",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lake-louise.jpg",
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/bald-mountains.jpg",
-  },
-  {
-    name: "Latemar",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/latemar.jpg",
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/vanoise.jpg",
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
-  },
-];
-
-//Validaiton Settings
-const config = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
-
-//Template for ID
-const cardData = {
-  name: "Yosemite Valley",
-  link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
-};
-
+//Variables
 const cardSelector = "#card-template";
-
-// Elements
 const profileEditButton = document.querySelector("#profile-edit-button");
 const profileEditModal = document.querySelector("#profile-edit-modal");
 const profileModalCloseButton = profileEditModal.querySelector(
   "#modal-close-button"
 );
-
-//Validation Elements
 const addCardFormElement = document.querySelector("#add-card-modal");
 const profileEditForm = profileEditModal.querySelector("#edit-profile-form");
-
 const editFormValidator = new FormValidator(config, profileEditForm);
 editFormValidator.enableValidation();
-
 const addCardValidator = new FormValidator(config, addCardFormElement);
 addCardValidator.enableValidation();
-
 const profileHeader = document.querySelector(".profile__header");
 const profileParagraph = document.querySelector(".profile__paragraph");
+const profileImage = ".profile__avatar";
+const profileImageEl = document.querySelector(profileImage);
 const profileHeaderInput = document.querySelector("#header-input");
 const profileParagraphInput = document.querySelector("#paragraph-input");
-
 const cardsWrap = document.querySelector(".cards__list");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
@@ -80,11 +39,34 @@ const imageModalCloseButton = pictureModal.querySelector("#modal-close-button");
 const addCardModalCloseButton = addCardModal.querySelector(
   "#modal-close-button"
 );
-
 const cardTitleInput = addCardFormElement.querySelector("#title-input");
 const cardLinkInput = addCardFormElement.querySelector("#link-input");
-
 const modals = document.querySelectorAll(".modal");
+const userInfo = new UserInfo(
+  {
+    userName: ".profile__header",
+    userJob: ".profile__paragraph",
+  },
+  profileImageEl
+);
+
+const cardsList = new Section(
+  {
+    data: messageList,
+    renderCard(cardData, wrapper) {
+      const cardElement = createCard(cardData);
+      cardsList.addItem(cardElement, wrapper);
+    },
+
+    const cardsList = new Section({
+      data: initialCards,
+      renderer: renderCard,
+    })
+  },
+  ".cards__list"
+);
+
+cardsList.renderItems();
 
 // Functions
 
@@ -113,54 +95,18 @@ function closePopup(modal) {
   modal.removeEventListener("mousedown", closePopupOverlay);
 }
 
-// Card Element
-/*function getCardElement(cardData) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImage = cardElement.querySelector(".card__image");
-  const cardTitle = cardElement.querySelector(".card__title");
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const cardDeleteButton = cardElement.querySelector(".card__delete");
-
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_active");
-  });
-
-  cardDeleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
-
-cardImage.addEventListener("click", () => {
-  openModal(pictureModal);
-  modalImage.src = cardData.link;
-  modalImage.alt = cardData.name;
-  modalImageCaption.textContent = cardData.name;
-  return modalImageCaption;
-});
-
- cardTitle.textContent = cardData.name;
-  cardImage.src = cardData.link;
-  cardImage.alt = cardData.name;
-
-  return cardElement;
-}*/
-
 function createCard(item) {
   const card = new Card(item, cardSelector, handleImageClick);
   return card.getView();
 }
-
-function renderCard(cardData, wrapper) {
-  const cardElement = createCard(cardData);
-  wrapper.prepend(cardElement);
-}
-
-// Event Handler
 
 function handleProfileEditSubmit(e) {
   e.preventDefault();
   profileHeader.textContent = profileHeaderInput.value;
   profileParagraph.textContent = profileParagraphInput.value;
   closePopup(profileEditModal);
+  editFormValidator.resetValidation();
+  editFormValidator.disableSubmitButton();
 }
 
 function handleAddCardFormSubmit(e) {
