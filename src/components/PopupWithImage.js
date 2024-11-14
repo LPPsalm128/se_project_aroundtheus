@@ -1,14 +1,15 @@
 import Popup from "./Popup.js";
+
 class PopupWithImage extends Popup {
   constructor(popupSelector) {
-    super({ popupSelector });
-    this._popupImage = this._popupElement.querySelector(".modal__image");
-    this._popupText = this._popupElement.querySelector(".modal__image-caption");
+    super(popupSelector);
+    this.modalImage = document.querySelector("#modal-image");
+    this.modalImageCaption = document.querySelector("#modal-caption");
   }
-  open({ cardName, cardLink }) {
-    this._popupImage.setAttribute("src", cardImage);
-    this._popupImage.setAttribute("alt", cardTitle);
-    this._popupText.textContent = cardTitle;
+  open(cardData) {
+    this.modalImage.alt = cardData.name;
+    this.modalImage.src = cardData.link;
+    this.modalImageCaption.textContent = cardData.name;
     super.open();
   }
 }

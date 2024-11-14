@@ -1,18 +1,22 @@
 class Section {
-  constructor({ data, renderer }, containerSelector) {
-    this._initialArray = data;
+  constructor({ items, renderer }, containerSelector) {
+    this._initialArray = items;
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
   }
 
-  renderItems(data, wrapper) {
-    this._initialArray.forEach((data) => {
-      this._renderer(data, wrapper);
+  renderItems() {
+    this._initialArray.forEach((items) => {
+      this.addItem(this._renderer(items));
     });
   }
 
   addItem(cardElement, wrapper = "prepend") {
-    this._container[wrapper](cardElement);
+    if (wrapper === "prepend") {
+      this._container.prepend(cardElement);
+    } else if (wrapper === "append") {
+      this._container.append(cardElement);
+    }
   }
 }
 

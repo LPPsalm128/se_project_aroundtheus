@@ -1,4 +1,4 @@
-export const initialCards = [
+const initialCards = [
   {
     name: "Yosemite Valley",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/yosemite.jpg",
@@ -25,8 +25,7 @@ export const initialCards = [
   },
 ];
 
-//Validaiton Settings
-export const config = {
+const config = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__button",
@@ -34,3 +33,30 @@ export const config = {
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__error_visible",
 };
+
+const variables = {
+  popupSelector: document.querySelector("#add-card-modal"),
+  cardSelector: "#card-template",
+  profileEditButton: document.querySelector("#profile-edit-button"),
+  profileModalCloseButton: document.querySelector("#modal-close-button"),
+  addCardFormElement: document.querySelector("#add-card-modal"),
+  profileHeader: document.querySelector(".profile__header"),
+  profileParagraph: document.querySelector(".profile__paragraph"),
+  cardsWrap: document.querySelector(".cards__list"),
+  cardTemplate:
+    document.querySelector("#card-template").content.firstElementChild,
+  addNewCardButton: document.querySelector(".profile__add-button"),
+  pictureModal: document.querySelector("#picture-modal"),
+  modalImage: document.querySelector("#modal-image"),
+  modalImageCaption: document.querySelector("#modal-caption"),
+  imageModalCloseButton: document.querySelector("#modal-close-button"),
+  addCardModalCloseButton: document.querySelector("#modal-close-button"),
+  cardTitleInput: document.querySelector("#title-input"),
+  cardLinkInput: document.querySelector("#link-input"),
+  modals: document.querySelectorAll(".modal"),
+  profileHeaderInput: document.querySelector("#header-input"),
+  profileParagraphInput: document.querySelector("#paragraph-input"),
+  profileImage: document.querySelector(".profile__avatar"),
+};
+
+export { initialCards, config, variables };

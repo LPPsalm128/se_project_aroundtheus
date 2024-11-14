@@ -2,7 +2,7 @@ import Popup from "./Popup.js";
 
 class PopupWithForm extends Popup {
   constructor(popupSelector, handleProfileEditSubmit) {
-    super({ popupSelector });
+    super(popupSelector);
     this._popupForm = this._popupElement.querySelector(".modal__form");
     this._inputSelector = ".modal__input";
     this._inputList = [
@@ -12,12 +12,23 @@ class PopupWithForm extends Popup {
     this._handleProfileEditSubmit = handleProfileEditSubmit;
   }
 
-  _getInputValues() {
-    this._formValues = {};
-    this._inputList.forEach((input) => {
-      this._formValues[input.name] = input.value;
+  setEventListeners() {
+    super.setEventListeners();
+    this._popupForm.addEventListener("submit", (evt) => {
+      evt.preventDefault();
+      const inputValues = this._getInputValues();
+      this._submitButton.textContent = "Save...";
+      this._handleProfileEditSubmit(inputValues);
+      this._popupForm.reset();
     });
-    return this._formValues;
+  }
+
+  _getInputValues() {
+    this._inputValues = {};
+    this._inputList.forEach((input) => {
+      this._inputValues[input.name] = input.value;
+    });
+    return this._inputValues;
   }
 
   setInputValues(data) {
@@ -25,14 +36,6 @@ class PopupWithForm extends Popup {
       input.value = data[input.name];
     });
   }
-
-  setEventListeners() {
-    this._popupForm.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-      this._submitButton.textContent = "Saving...";
-      this._handleProfileEditSubmit(this._getInputValues(), this._submitButton);
-    });
-    super.setEventListeners();
-  }
 }
+
 export default PopupWithForm;
