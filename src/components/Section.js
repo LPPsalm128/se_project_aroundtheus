@@ -11,12 +11,8 @@ class Section {
     });
   }
 
-  addItem(cardElement, wrapper = "prepend") {
-    if (wrapper === "prepend") {
-      this._container.prepend(cardElement);
-    } else if (wrapper === "append") {
-      this._container.append(cardElement);
-    }
+  addItem(cardElement, method = "prepend") {
+    this._container[method](cardElement);
   }
 }
 

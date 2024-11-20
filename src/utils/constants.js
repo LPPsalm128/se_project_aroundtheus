@@ -37,7 +37,7 @@ const config = {
 const variables = {
   popupSelector: document.querySelector("#add-card-modal"),
   cardSelector: "#card-template",
-  profileEditButton: document.querySelector("#profile-edit-button"),
+  profileEditButton: document.getElementById("profile-edit-button"),
   profileModalCloseButton: document.querySelector("#modal-close-button"),
   addCardFormElement: document.querySelector("#add-card-modal"),
   profileHeader: document.querySelector(".profile__header"),

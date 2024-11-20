@@ -1,23 +1,24 @@
 class UserInfo {
-  constructor(profileHeaderInput, profileParagraphInput, profileImage) {
-    this._userNameEl = profileHeaderInput;
-    this._userInfoEl = profileParagraphInput;
-    this._profileImageEl = profileImage;
+  constructor(userName, userInfo, profileImage) {
+    this._userNameEl = document.querySelector(userName);
+    this._userInfoEl = document.querySelector(userInfo);
+    this._profileImageEl = document.querySelector(profileImage);
   }
+
   getUserInfo() {
     return {
-      name: this._userNameEl.value,
-      info: this._userInfoEl.value,
+      name: this._userNameEl.textContent,
+      info: this._userInfoEl.textContent,
     };
   }
 
-  setUserInfo(name, info) {
-    this._userNameEl.value = name;
-    this._userInfoEl.value = info;
+  setUserInfo({ name, info }) {
+    if (name) this._userNameEl.textContent = name;
+    if (info) this._userInfoEl.textContent = info;
   }
 
   setImg(avatar) {
-    this._profileImageEl.src = avatar;
+    if (avatar) this._profileImageEl.src = avatar;
   }
 }
 

@@ -8,8 +8,6 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 import Section from "../components/Section.js";
 
-//Variables
-
 const formValidators = {};
 
 const enableValidation = (config) => {
@@ -25,9 +23,9 @@ const enableValidation = (config) => {
 };
 
 const userInfo = new UserInfo(
-  variables.profileHeaderInput,
-  variables.profileParagraphInput,
-  variables.profileImage
+  ".profile__header",
+  ".profile__paragraph",
+  ".profile__avatar"
 );
 
 const editProfileModal = new PopupWithForm(
@@ -35,26 +33,26 @@ const editProfileModal = new PopupWithForm(
   handleProfileFormSubmit
 );
 
-function openEditProfileModal() {
-  const profileHeaderText =
-    document.querySelector(".profile__header").textContent;
-  const profileParagraphText = document.querySelector(
-    ".profile__paragraph"
-  ).textContent;
+const profileEditPopupForm = editProfileModal.getForm();
 
-  variables.profileHeaderInput.value = profileHeaderText;
-  variables.profileParagraphInput.value = profileParagraphText;
+function openEditProfileModal() {
+  const userData = userInfo.getUserInfo();
+
+  document.querySelector("#header-input").value = userData.name;
+  document.querySelector("#paragraph-input").value = userData.info;
 
   editProfileModal.open();
 }
 
-document
-  .getElementById("profile-edit-button")
-  .addEventListener("click", openEditProfileModal);
+variables.profileEditButton = document.getElementById("profile-edit-button");
+variables.profileHeaderInput = document.getElementById("header-input");
+variables.profileParagraphInput = document.getElementById("paragraph-input");
 
 variables.profileEditButton.addEventListener("click", () => {
+  console.log("Edit button clicked");
   formValidators.profileEdit.resetValidation();
   const user = userInfo.getUserInfo();
+  console.log("User data:", user);
   variables.profileHeaderInput.value = user.name;
   variables.profileParagraphInput.value = user.info;
   editProfileModal.open();
@@ -76,14 +74,11 @@ const section = new Section(
 );
 section.renderItems();
 
-function handleProfileFormSubmit() {
-  const name = variables.profileHeaderInput.value;
-  const info = variables.profileParagraphInput.value;
+function handleProfileFormSubmit(inputValues) {
+  const name = inputValues.name;
+  const info = inputValues.info;
 
-  userInfo.setUserInfo(name, info);
-
-  document.querySelector(".profile__header").textContent = name;
-  document.querySelector(".profile__paragraph").textContent = info;
+  userInfo.setUserInfo({ name, info });
 
   editProfileModal.close();
 }
