@@ -11,8 +11,8 @@ import Section from "../components/Section.js";
 const formValidators = {};
 
 const enableValidation = (config) => {
-  const profileEditForm = document.querySelector("#edit-profile-form");
-  formValidators.profileEdit = new FormValidator(config, profileEditForm);
+  const profileEditPopupForm = editProfileModal.getForm();
+  formValidators.profileEdit = new FormValidator(config, profileEditPopupForm);
   formValidators.profileEdit.enableValidation();
 
   const addCardValidator = new FormValidator(
@@ -32,17 +32,6 @@ const editProfileModal = new PopupWithForm(
   "#profile-edit-modal",
   handleProfileFormSubmit
 );
-
-const profileEditPopupForm = editProfileModal.getForm();
-
-function openEditProfileModal() {
-  const userData = userInfo.getUserInfo();
-
-  document.querySelector("#header-input").value = userData.name;
-  document.querySelector("#paragraph-input").value = userData.info;
-
-  editProfileModal.open();
-}
 
 variables.profileEditButton = document.getElementById("profile-edit-button");
 variables.profileHeaderInput = document.getElementById("header-input");
@@ -96,11 +85,6 @@ function handleImageClick(cardData) {
 export function createCard(item) {
   const card = new Card(item, variables.cardSelector, handleImageClick);
   return card.getView();
-}
-
-function renderCard(cardData) {
-  const cardElement = createCard(cardData);
-  wrapper.prepend(cardElement);
 }
 
 variables.addNewCardButton.addEventListener("click", () => {
