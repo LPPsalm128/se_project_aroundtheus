@@ -15,11 +15,11 @@ const enableValidation = (config) => {
   formValidators.profileEdit = new FormValidator(config, profileEditPopupForm);
   formValidators.profileEdit.enableValidation();
 
-  const addCardValidator = new FormValidator(
+  formValidators.addCard = new FormValidator(
     config,
     variables.addCardFormElement
   );
-  addCardValidator.enableValidation();
+  formValidators.addCard.enableValidation();
 };
 
 const userInfo = new UserInfo(
@@ -66,9 +66,7 @@ section.renderItems();
 function handleProfileFormSubmit(inputValues) {
   const name = inputValues.name;
   const info = inputValues.info;
-
   userInfo.setUserInfo({ name, info });
-
   editProfileModal.close();
 }
 
@@ -76,6 +74,8 @@ function handleProfileFormCreate(inputValues) {
   const cardElement = createCard(inputValues);
   section.addItem(cardElement);
   addCardModal.close();
+  formValidators.addCard.resetValidation();
+  formValidators.addCard.disableSubmitButton();
 }
 
 function handleImageClick(cardData) {
