@@ -1,4 +1,4 @@
-export default class Card {
+class Card {
   constructor(cardData, cardSelector, handleImageClick) {
     this._name = cardData.name;
     this._link = cardData.link;
@@ -68,3 +68,5 @@ export default class Card {
     return this._cardElement;
   }
 }
+
+export default Card;

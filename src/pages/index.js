@@ -7,6 +7,19 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 import Section from "../components/Section.js";
+import Api from "../components/Api.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
+import { data } from "autoprefixer";
+
+const avatarForm = document.forms["avatar-form"];
+
+const api = new Api({
+  baseUrl: "https://around-api.en.tripleten-services.com/v1",
+  headers: {
+    authorization: "91f06c72-7b91-4e66-823e-042f284bc54f",
+    "Content-Type": "application/json",
+  },
+});
 
 const formValidators = {};
 
@@ -20,6 +33,11 @@ const enableValidation = (config) => {
     variables.addCardFormElement
   );
   formValidators.addCard.enableValidation();
+  formValidators.avatarValidate = new FormValidator(
+    config,
+    variables.avatarEditButton
+  );
+  formValidators.avatarValidate.enableValidation();
 };
 
 const userInfo = new UserInfo(
@@ -37,16 +55,6 @@ variables.profileEditButton = document.getElementById("profile-edit-button");
 variables.profileHeaderInput = document.getElementById("header-input");
 variables.profileParagraphInput = document.getElementById("paragraph-input");
 
-variables.profileEditButton.addEventListener("click", () => {
-  console.log("Edit button clicked");
-  formValidators.profileEdit.resetValidation();
-  const user = userInfo.getUserInfo();
-  console.log("User data:", user);
-  variables.profileHeaderInput.value = user.name;
-  variables.profileParagraphInput.value = user.info;
-  editProfileModal.open();
-});
-
 const addCardModal = new PopupWithForm(
   "#add-card-modal",
   handleProfileFormCreate
@@ -61,13 +69,58 @@ const section = new Section(
   },
   ".cards__list"
 );
-section.renderItems();
+
+api
+  .getUserInfo({ name, info, avatar })
+  .then((data) => {
+    userInfo.setUserInfo({
+      name: data.name,
+      info: data.info,
+      avatar: data.avatar,
+    });
+    editProfileModal.close();
+  })
+  .catch((err) => {
+    console.error("Error setting user info:", err);
+  });
+
+const modalWithConfirm = new PopupWithConfirmation("#delete-card-modal", api);
+document.addEventListener("DOMContentLoaded", () => {
+  modalWithConfirm.setEventListeners();
+});
+
+const cardDelete = document.querySelectorAll("#modal-close-button");
 
 function handleProfileFormSubmit(inputValues) {
   const name = inputValues.name;
   const info = inputValues.info;
-  userInfo.setUserInfo({ name, info });
-  editProfileModal.close();
+  const avatar = inputValues.avatar;
+
+  return api
+    .setUserInfo({ name, info, avatar })
+    .then((data) => {
+      userInfo.setUserInfo({
+        name: data.name,
+        info: data.info,
+        avatar: data.avatar,
+      });
+      editProfileModal.close();
+    })
+    .catch((err) => {
+      console.error("Error setting user info:", err);
+    });
+}
+
+const avatarPopup = new PopupWithForm(
+  "#avatar-picture-modal",
+  handleAvatarFormSubmit
+);
+avatarPopup.setEventListeners();
+
+function handleAvatarFormSubmit(inputValues) {
+  return api.setUserInfo(inputValues.avatar).then((updatedData) => {
+    userInfo.setUserInfo(updatedData);
+  });
 }
 
 function handleProfileFormCreate(inputValues) {
@@ -83,16 +136,63 @@ function handleImageClick(cardData) {
 }
 
 export function createCard(item) {
-  const card = new Card(item, variables.cardSelector, handleImageClick);
+  const card = new Card(
+    item,
+    variables.cardSelector,
+    handleImageClick,
+    handleDeleteCard
+  );
   return card.getView();
 }
+
+function handleDeleteCard(cardElement, cardID) {
+  modalWithConfirm.setConfirmCallback(() => {
+    return api
+      .deleteCard(cardID)
+      .then(() => {
+        cardElement.remove();
+        modalWithConfirm.close();
+      })
+      .catch((err) => {
+        console.error("Error deleting card:", err);
+      });
+  });
+  modalWithConfirm.open();
+}
+
+variables.profileEditButton.addEventListener("click", () => {
+  console.log("Edit button clicked");
+  formValidators.profileEdit.resetValidation();
+  const user = userInfo.getUserInfo();
+  console.log("User data:", user);
+  variables.profileHeaderInput.value = user.name;
+  variables.profileParagraphInput.value = user.info;
+  editProfileModal.open();
+});
 
 variables.addNewCardButton.addEventListener("click", () => {
   addCardModal.open();
 });
 
+document.querySelectorAll(".card__delete").forEach((button) => {
+  button.addEventListener("click", (event) => {
+    const cardElement = event.target.closest(".card");
+    const cardID = cardElement.dataset.id;
+    handleDeleteCard(cardElement, cardID);
+    console.log("Button clicked");
+  });
+});
+
+document.getElementById("modal-close-button").addEventListener("click", () => {
+  modalWithConfirm.close();
+});
+
 editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
 previewImagePopup.setEventListeners();
+variables.avatarEditButton.addEventListener("click", () => {
+  avatarPopup.open();
+  formValidators.avatarValidate.resetValidation();
+});
 
 enableValidation(config);

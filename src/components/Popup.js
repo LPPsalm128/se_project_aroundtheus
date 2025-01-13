@@ -2,6 +2,7 @@ class Popup {
   constructor(popupSelector) {
     this._popupElement = document.querySelector(popupSelector);
     this._closeButton = this._popupElement.querySelector("#modal-close-button");
+    console.log(document.querySelector(popupSelector));
   }
 
   open() {
@@ -17,7 +18,7 @@ class Popup {
   }
 
   _closePopupEsc = (evt) => {
-    if (evt.key === "Escape") {
+    if (evt.key === "Escape" || evt.key === "Esc") {
       this.close();
     }
   };

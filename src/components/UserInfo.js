@@ -9,15 +9,13 @@ class UserInfo {
     return {
       name: this._userNameEl.textContent,
       info: this._userInfoEl.textContent,
+      avatar: this._profileImageEl.src,
     };
   }
 
   setUserInfo({ name, info }) {
     if (name) this._userNameEl.textContent = name;
     if (info) this._userInfoEl.textContent = info;
-  }
-
-  setImg(avatar) {
     if (avatar) this._profileImageEl.src = avatar;
   }
 }

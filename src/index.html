@@ -23,6 +23,13 @@
             alt="Avatar"
             class="profile__avatar"
           />
+          <div class="profile__image-overlay">
+            <img
+              src="<%=require('./images/avatar-edit-icon.svg')%>"
+              alt="Edit Icon"
+              class="profile__edit-icon"
+            />
+          </div>
           <div class="profile__info">
             <h1 class="profile__header">Jacques Cousteau</h1>
             <button
@@ -130,6 +137,50 @@
       </div>
     </div>
 
+    <!----Avatar Modal---->
+    <div class="modal" id="avatar-picture-modal">
+      <div class="modal__container">
+        <button class="modal__close" id="avatar-edit-close"></button>
+        <h2 class="modal__heading modal__heading-avatar">
+          Change profile picture
+        </h2>
+        <form class="modal__form" id="avatar-form">
+          <input
+            type="url"
+            class="modal__input"
+            id="avatar"
+            name="avatar"
+            placeholder="Profile picture link"
+            required
+          />
+          <span class="modal__error" id="avatar-error"></span>
+          <button
+            type="submit"
+            class="modal__button modal__button-avatar"
+            aria-label="Save button"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Card Modal -->
+    <div class="modal" id="delete-card-modal">
+      <div class="modal__container">
+        <button class="modal__close" id="modal-close-button"></button>
+        <h2 class="modal__heading modal__heading-delete">Are you sure?</h2>
+        <button
+          type="submit"
+          class="modal__button modal__button-delete"
+          aria-label="Delete button"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+
+    <!-----Card Template--->
     <template id="card-template">
       <li class="card">
         <img src="" alt="" class="card__image" />
