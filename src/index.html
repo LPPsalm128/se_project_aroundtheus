@@ -23,13 +23,11 @@
             alt="Avatar"
             class="profile__avatar"
           />
-          <div class="profile__image-overlay">
-            <img
-              src="<%=require('./images/avatar-edit-icon.svg')%>"
-              alt="Edit Icon"
-              class="profile__edit-icon"
-            />
-          </div>
+          <img
+            src="<%=require('./images/avatar-edit-icon.svg')%>"
+            alt="Edit Icon"
+            class="profile__edit-icon"
+          />
           <div class="profile__info">
             <h1 class="profile__header">Jacques Cousteau</h1>
             <button
@@ -140,7 +138,7 @@
     <!----Avatar Modal---->
     <div class="modal" id="avatar-picture-modal">
       <div class="modal__container">
-        <button class="modal__close" id="avatar-edit-close"></button>
+        <button class="modal__close" id="modal-close-button"></button>
         <h2 class="modal__heading modal__heading-avatar">
           Change profile picture
         </h2>

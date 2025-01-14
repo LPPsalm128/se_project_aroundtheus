@@ -71,7 +71,7 @@ const section = new Section(
 );
 
 api
-  .getUserInfo({ name, info, avatar })
+  .getUserInfo({ name, avatar })
   .then((data) => {
     userInfo.setUserInfo({
       name: data.name,

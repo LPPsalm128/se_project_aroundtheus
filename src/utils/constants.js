@@ -57,7 +57,7 @@ const variables = {
   profileHeaderInput: document.querySelector("#header-input"),
   profileParagraphInput: document.querySelector("#paragraph-input"),
   //profileImage: document.querySelector(".profile__avatar"),
-  avatarEditButton: document.querySelector(".profile__image-overlay"),
+  avatarEditButton: document.querySelector(".profile__edit-icon"),
 };
 
 export { initialCards, config, variables };
