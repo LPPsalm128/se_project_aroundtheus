@@ -13,12 +13,12 @@
   margin-right: 24.375px;
 }
 
-.profile__image-overlay:hover {
+/*.profile__edit-icon:hover {
   opacity: 1;
   cursor: pointer;
 }
 
-/*.profile__edit-icon {
+.profile__edit-icon {
   width: 26px;
   height: 26px;
   position: relative;
