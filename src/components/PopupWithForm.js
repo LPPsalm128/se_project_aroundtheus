@@ -36,33 +36,21 @@ class PopupWithForm extends Popup {
     });
   }
 
-  renderLoading(isLoading, loadingText = "Saving...") {
-    if (isLoading) {
-      this._submitButton.textContent = loadingText;
-    } else {
-      this._submitButton.textContent = this._submitButtonText;
-    }
-  }
-
   setEventListeners() {
     super.setEventListeners();
     this._popupForm.addEventListener("submit", (evt) => {
       evt.preventDefault();
-      const inputValues = this._getInputValues();
-      this._submitButton.textContent = "Save";
-      this.renderLoading(true);
-      this._handleSubmit(this._getInputValues())
-        .then(() => {
-          this._popupForm.reset();
-          this.close();
-        })
-        .catch((err) => {
-          console.error(`Form submission error: ${err}`);
-        })
-        .finally(() => {
-          this.renderLoading(false); // revert to original text
-        });
+      this._handleSubmit(this._getInputValues());
     });
+  }
+
+  renderLoading(isLoading) {
+    if (isLoading) {
+      this._submitButton.textContent = "Saving...";
+      this._submitButton.disabled = true;
+    } else {
+      this._submitButton.textContent = this._submitButtonText;
+    }
   }
 }
 

@@ -18,16 +18,18 @@
       <header class="header page__section"></header>
       <main class="content">
         <section class="profile page__section">
-          <img
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
-            alt="Avatar"
-            class="profile__avatar"
-          />
-          <!-- <img
-            src="<%=require('./images/avatar-edit-icon.svg')%>"
-            alt="Edit Icon"
-            class="profile__edit-icon"
-          />----->
+          <div class="profile__avatar-container">
+            <img
+              src="<%=require('./images/jacques-cousteau.jpg')%>"
+              alt="Avatar"
+              class="profile__avatar"
+            />
+            <button
+              class="profile__edit-icon"
+              id="edit-profile-icon"
+              type="button"
+            ></button>
+          </div>
           <div class="profile__info">
             <h1 class="profile__header">Jacques Cousteau</h1>
             <button

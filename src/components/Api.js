@@ -4,10 +4,6 @@ class Api {
     this._headers = headers;
   }
 
-  _request(url, options) {
-    return fetch(url, options).then(this._handleResponse);
-  }
-
   _handleResponse(res) {
     if (res.ok) {
       return res.json();
@@ -20,43 +16,20 @@ class Api {
     console.error("API Error:", err);
   }
 
-  getUserInfo() {
-    return this._request(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: this._headers,
-    }).catch(this._handleError);
-  }
-
-  setUserInfo({ name, info }) {
-    return this._request(`${this._baseUrl}/users/me`, {
-      method: "PATCH",
-      headers: this._headers,
-      body: JSON.stringify({
-        name: name,
-        info: info,
-      }),
-    }).catch(this._handleError);
-  }
-
   getInitialCards() {
-    return this._request(`${this._baseUrl}/cards`, {
-      method: "GET",
+    return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     }).catch(this._handleError);
   }
 
-  setUserAvatar(avatar) {
-    return this._request(`${this._baseUrl}/users/me/avatar`, {
-      method: "PATCH",
+  getUserInfo() {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
-      body: JSON.stringify({
-        avatar: avatar,
-      }),
     }).catch(this._handleError);
   }
 
-  addCard({ name, link }) {
-    return this._request(`${this._baseUrl}/cards`, {
+  createCard({ name, link }) {
+    return fetch(`${this._baseUrl}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({ name, link }),
@@ -64,24 +37,57 @@ class Api {
   }
 
   deleteCard(cardId) {
-    return this._request(`${this._baseUrl}/cards/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
     }).catch(this._handleError);
   }
 
-  likeCard(cardId) {
-    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: "PUT",
+  likeCard(cardId, isLiked) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: isLiked ? "DELETE" : "PUT",
       headers: this._headers,
     }).catch(this._handleError);
   }
 
   dislikeCard(cardId) {
-    return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
     }).catch(this._handleError);
+  }
+
+  setUserInfo({ name, info }) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        info: info,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
+      .catch(this._handleError);
+  }
+
+  setUserAvatar(avatar) {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({ avatar: avatar }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return Promise.reject(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
+      .catch(this._handleError);
   }
 }
 
