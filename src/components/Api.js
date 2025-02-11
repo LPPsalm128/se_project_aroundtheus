@@ -18,12 +18,14 @@ class Api {
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
+      method: "GET",
       headers: this._headers,
     }).catch(this._handleError);
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
+      method: "GET",
       headers: this._headers,
     }).catch(this._handleError);
   }
@@ -63,7 +65,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({
         name: name,
-        info: info,
+        about: info,
       }),
     })
       .then((response) => {

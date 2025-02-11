@@ -70,9 +70,6 @@ const previewImagePopup = new PopupWithImage("#picture-modal");
 
 // PopupWithConfirmation
 const modalWithConfirm = new PopupWithConfirmation("#delete-card-modal");
-document.addEventListener("DOMContentLoaded", () => {
-  modalWithConfirm.setEventListeners();
-});
 
 // Section
 const section = new Section(
@@ -99,7 +96,7 @@ api
   .then((user) => {
     userInfo.setUserInfo({
       name: user.name,
-      info: user.info,
+      about: user.info,
     }),
       userInfo.setUserAvatar(user.avatar);
   })
@@ -108,7 +105,7 @@ api
   });
 
 // Functions
-export function createCard(item) {
+function createCard(item) {
   const card = new Card(
     item,
     variables.cardSelector,
@@ -180,19 +177,23 @@ function handleImageClick(cardData) {
   previewImagePopup.open(cardData);
 }
 
-function handleDeleteCard(cardElement, cardID) {
+function handleDeleteCard(card) {
+  modalWithConfirm.open();
   modalWithConfirm.setConfirmCallback(() => {
-    return api
-      .deleteCard(cardID)
+    modalWithConfirm.renderLoading(true);
+    api
+      .deleteCard(card.id)
       .then(() => {
-        cardElement.remove();
+        card.modalWithConfirm();
         modalWithConfirm.close();
       })
       .catch((err) => {
         console.error("Error deleting card:", err);
+      })
+      .finally(() => {
+        modalWithConfirm.renderLoading(false);
       });
   });
-  modalWithConfirm.open();
 }
 
 // EventListeners
@@ -210,15 +211,6 @@ variables.addNewCardButton.addEventListener("click", () => {
   addCardModal.open();
 });
 
-document.querySelectorAll(".card__delete").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    const cardElement = event.target.closest(".card");
-    const cardID = cardElement.dataset.id;
-    handleDeleteCard(cardElement, cardID);
-    console.log("Button clicked");
-  });
-});
-
 document.getElementById("modal-close-button").addEventListener("click", () => {
   modalWithConfirm.close();
 });
@@ -227,6 +219,7 @@ editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
 previewImagePopup.setEventListeners();
 avatarPopup.setEventListeners();
+modalWithConfirm.setEventListeners();
 variables.avatarEditButton.addEventListener("click", () => {
   avatarPopup.open();
   formValidators.avatarValidate.resetValidation();
