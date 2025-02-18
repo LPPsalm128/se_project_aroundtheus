@@ -72,31 +72,37 @@ const previewImagePopup = new PopupWithImage("#picture-modal");
 const modalWithConfirm = new PopupWithConfirmation("#delete-card-modal");
 
 // Section
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: createCard,
-  },
-  ".cards__list"
-);
+let section;
 
-// Api
 api
   .getInitialCards()
-  .then((item) => {
-    console.log(item);
-    section.renderItems(item);
+  .then((cards) => {
+    section = new Section(
+      {
+        items: cards,
+        renderer: (cardData) => {
+          const cardElement = createCard(cardData);
+          renderCard(cardData);
+          section.addItem(cardElement);
+        },
+      },
+      ".cards__list"
+    );
+    console.log(cards);
+    section.renderItems(cards);
   })
   .catch((err) => {
     console.error(err);
   });
+
+// API
 
 api
   .getUserInfo()
   .then((user) => {
     userInfo.setUserInfo({
       name: user.name,
-      about: user.info,
+      info: user.info,
     }),
       userInfo.setUserAvatar(user.avatar);
   })
@@ -105,19 +111,18 @@ api
   });
 
 // Functions
-function createCard(item) {
+function renderCard(cardElement) {
+  variables.cardsWrap.append(cardElement);
+}
+
+function createCard(cardData) {
   const card = new Card(
-    item,
+    cardData,
     variables.cardSelector,
     handleImageClick,
     handleDeleteCard
   );
   return card.getView();
-}
-
-function renderCard(cardData) {
-  const cardElement = createCard(cardData);
-  section.addItem(cardElement);
 }
 
 function handleProfileFormSubmit(inputValues) {

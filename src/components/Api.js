@@ -20,14 +20,18 @@ class Api {
     return fetch(`${this._baseUrl}/cards`, {
       method: "GET",
       headers: this._headers,
-    }).catch(this._handleError);
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
   }
 
   getUserInfo() {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
-    }).catch(this._handleError);
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
   }
 
   createCard({ name, link }) {
@@ -35,28 +39,36 @@ class Api {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({ name, link }),
-    }).catch(this._handleError);
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
   }
 
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    }).catch(this._handleError);
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
   }
 
   likeCard(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: isLiked ? "DELETE" : "PUT",
       headers: this._headers,
-    }).catch(this._handleError);
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
   }
 
   dislikeCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    }).catch(this._handleError);
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
   }
 
   setUserInfo({ name, info }) {
@@ -74,6 +86,7 @@ class Api {
         }
         return response.json();
       })
+      .then(this._handleResponse)
       .catch(this._handleError);
   }
 
@@ -89,6 +102,7 @@ class Api {
         }
         return response.json();
       })
+      .then(this._handleResponse)
       .catch(this._handleError);
   }
 }

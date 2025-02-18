@@ -30,6 +30,28 @@
   border-radius: 10px;
 }
 
+.modal__avatar-container {
+  background-color: #fff;
+  margin: auto;
+  position: relative;
+  max-width: 430px;
+  width: 100%;
+  min-height: 202px;
+  padding: 36px;
+  border-radius: 10px;
+}
+
+.modal__delete-container {
+  background-color: #fff;
+  margin: auto;
+  position: relative;
+  max-width: 430px;
+  width: 100%;
+  min-height: 181px;
+  padding: 36px;
+  border-radius: 10px;
+}
+
 .modal__heading {
   color: #000;
   font-family: "Inter", Arial, Verdana, sans-serif;
