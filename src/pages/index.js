@@ -149,7 +149,8 @@ function handleAvatarFormSubmit(avatar) {
   api
     .setUserAvatar(avatar)
     .then((info) => {
-      userInfo.setUserAvatar(avatar);
+      console.log(info);
+      userInfo.setUserAvatar(info.avatar);
       avatarPopup.close();
     })
     .catch((err) => {

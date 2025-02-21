@@ -5,6 +5,8 @@ class Api {
   }
 
   _handleResponse(res) {
+    // console.log(res);
+    // console.log(res.json());
     if (res.ok) {
       return res.json();
     }
@@ -84,23 +86,24 @@ class Api {
         if (!response.ok) {
           return Promise.reject(`Error: ${response.status}`);
         }
-        return response.json();
+        return response;
       })
       .then(this._handleResponse)
       .catch(this._handleError);
   }
 
   setUserAvatar(avatar) {
+    console.log(avatar);
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({ avatar: avatar }),
+      body: JSON.stringify(avatar),
     })
       .then((response) => {
         if (!response.ok) {
           return Promise.reject(`Error: ${response.status}`);
         }
-        return response.json();
+        return response;
       })
       .then(this._handleResponse)
       .catch(this._handleError);
