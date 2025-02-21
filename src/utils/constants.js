@@ -39,7 +39,7 @@ const variables = {
   cardSelector: "#card-template",
   profileEditButton: document.getElementById("profile-edit-button"),
   profileModalCloseButton: document.querySelector("#modal-close-button"),
-  addCardFormElement: document.querySelector("#add-card-modal"),
+  addCardFormElement: document.querySelector("#add-card-form"),
   profileHeader: document.querySelector(".profile__header"),
   profileParagraph: document.querySelector(".profile__paragraph"),
   cardsWrap: document.querySelector(".cards__list"),

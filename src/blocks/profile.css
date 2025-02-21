@@ -33,7 +33,7 @@
 
 .profile__edit-icon:hover {
   background: url(../images/avatar-edit-icon.svg) center no-repeat;
-  opacity: 100%;
+  opacity: 100%git;
   cursor: pointer;
 }
 

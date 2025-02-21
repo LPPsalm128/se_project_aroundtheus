@@ -120,20 +120,21 @@ function createCard(cardData) {
     cardData,
     variables.cardSelector,
     handleImageClick,
-    handleDeleteCard
+    handleDeleteCard,
+    handleLikeClick
   );
   return card.getView();
 }
 
 function handleProfileFormSubmit(inputValues) {
-  const { profile__name, profile__info } = inputValues;
+  const { name, info } = inputValues;
   editProfileModal.renderLoading(true);
   api
-    .setUserInfo({ name: profile__name, info: profile__info })
+    .setUserInfo({ name, info })
     .then(() => {
       userInfo.setUserInfo({
-        name: inputValues.profile__name,
-        info: inputValues.profile__info,
+        name: inputValues.name,
+        info: inputValues.info,
       });
       editProfileModal.close();
     })
@@ -144,37 +145,30 @@ function handleProfileFormSubmit(inputValues) {
 }
 
 function handleAvatarFormSubmit(avatar) {
-  if (!avatar || !avatar.profile__url) {
-    console.error("Invalid avatar data");
-    return;
-  }
-
   avatarPopup.renderLoading(true);
-
   api
-    .setUserAvatar(avatar.profile__url)
-    .then((users) => {
-      console.log(users);
-      if (!users || !users.avatar) {
-        throw new Error("Invalid response data");
-      }
-      userInfo.setUserAvatar(users.avatar);
+    .setUserAvatar(avatar)
+    .then((info) => {
+      userInfo.setUserAvatar(avatar);
       avatarPopup.close();
     })
-    .catch((err) => console.error(err))
+    .catch((err) => {
+      console.error("Error updating avatar:", err);
+    })
     .finally(() => avatarPopup.renderLoading(false));
 }
 
 function handleProfileFormCreate(inputData) {
-  const { card__title, card__url } = inputData;
+  const { name, link } = inputData;
   addCardModal.renderLoading(true);
-  api.createCard({ name: card__title, link: card__url }).then((newCard) => {
+  api.createCard({ name, link }).then((newCard) => {
     renderCard(newCard);
     console.log(newCard);
+    createCard(newCard);
+    variables.addCardFormElement.reset();
     addCardModal.close();
     formValidators.addCard.resetValidation();
     formValidators.addCard.disableSubmitButton();
-    addCardFormElement.reset();
   });
 }
 
@@ -182,12 +176,12 @@ function handleImageClick(cardData) {
   previewImagePopup.open(cardData);
 }
 
-function handleDeleteCard(card) {
+function handleDeleteCard(cardId) {
   modalWithConfirm.open();
   modalWithConfirm.setConfirmCallback(() => {
     modalWithConfirm.renderLoading(true);
     api
-      .deleteCard(card.id)
+      .deleteCard(cardId)
       .then(() => {
         card.modalWithConfirm();
         modalWithConfirm.close();
@@ -199,6 +193,17 @@ function handleDeleteCard(card) {
         modalWithConfirm.renderLoading(false);
       });
   });
+}
+
+function handleLikeClick(card) {
+  api
+    .setCardLikes(cardId, isLiked)
+    .then((newCardData) => {
+      card.updateLikes(newCardData.isLiked);
+    })
+    .catch((err) => {
+      console.log("Failed to update card likes status:", err);
+    });
 }
 
 // EventListeners
