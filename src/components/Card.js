@@ -5,6 +5,7 @@ class Card {
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteCard = handleDeleteCard;
+    console.log(cardData);
   }
 
   _getTemplate() {

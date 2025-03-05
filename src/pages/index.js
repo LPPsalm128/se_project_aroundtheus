@@ -161,16 +161,22 @@ function handleAvatarFormSubmit(avatar) {
 
 function handleProfileFormCreate(inputData) {
   const { name, link } = inputData;
+  console.log(inputData);
   addCardModal.renderLoading(true);
-  api.createCard({ name, link }).then((newCard) => {
-    renderCard(newCard);
-    console.log(newCard);
-    createCard(newCard);
-    variables.addCardFormElement.reset();
-    addCardModal.close();
-    formValidators.addCard.resetValidation();
-    formValidators.addCard.disableSubmitButton();
-  });
+  api
+    .createCard({ name, link })
+    .then((newCard) => {
+      renderCard(newCard);
+      console.log(newCard);
+      createCard(newCard);
+      variables.addCardFormElement.reset();
+      addCardModal.close();
+      formValidators.addCard.resetValidation();
+      formValidators.addCard.disableSubmitButton();
+    })
+    .catch((err) => {
+      console.error("Error loading new card:", err);
+    });
 }
 
 function handleImageClick(cardData) {
@@ -181,10 +187,12 @@ function handleDeleteCard(cardId) {
   modalWithConfirm.open();
   modalWithConfirm.setConfirmCallback(() => {
     modalWithConfirm.renderLoading(true);
+    console.log(modalWithConfirm);
+    console.log(modalWithConfirm.renderLoading);
     api
       .deleteCard(cardId)
       .then(() => {
-        card.modalWithConfirm();
+        //card.modalWithConfirm();
         modalWithConfirm.close();
       })
       .catch((err) => {

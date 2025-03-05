@@ -39,6 +39,17 @@ class Popup {
       }
     });
   }
+
+  renderLoading(isLoading) {
+    if (isLoading) {
+      this._confirmButton.textContent = "Loading...";
+      // Optionally disable the button
+      this._confirmButton.disabled = true;
+    } else {
+      this._confirmButton.textContent = "Confirm";
+      this._confirmButton.disabled = false;
+    }
+  }
 }
 
 export default Popup;

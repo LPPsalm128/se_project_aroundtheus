@@ -74,43 +74,27 @@ class Api {
   }
 
   setUserInfo({ name, info }) {
-    return (
-      fetch(`${this._baseUrl}/users/me`, {
-        method: "PATCH",
-        headers: this._headers,
-        body: JSON.stringify({
-          name: name,
-          about: info,
-        }),
-      })
-        // .then((response) => {
-        //   if (!response.ok) {
-        //     return Promise.reject(`Error: ${response.status}`);
-        //   }
-        //   return response;
-        // })
-        .then(this._handleResponse)
-        .catch(this._handleError)
-    );
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name: name,
+        about: info,
+      }),
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
   }
 
   setUserAvatar(avatar) {
     console.log(avatar);
-    return (
-      fetch(`${this._baseUrl}/users/me/avatar`, {
-        method: "PATCH",
-        headers: this._headers,
-        body: JSON.stringify(avatar),
-      })
-        // .then((response) => {
-        //   if (!response.ok) {
-        //     return Promise.reject(`Error: ${response.status}`);
-        //   }
-        //   return response;
-        // })
-        .then(this._handleResponse)
-        .catch(this._handleError)
-    );
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(avatar),
+    })
+      .then(this._handleResponse)
+      .catch(this._handleError);
   }
 }
 
