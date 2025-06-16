@@ -14,20 +14,6 @@ class PopupWithConfirmation extends Popup {
     this._handleConfirm = callback;
   }
 
-  setDeleteHandler({ cardId, cardElement }) {
-    this._handleConfirm = () => {
-      this._api
-        .deleteCard(cardId)
-        .then(() => {
-          cardElement.remove();
-          this.close();
-        })
-        .catch((err) => {
-          console.error("Error deleting card:", err);
-        });
-    };
-  }
-
   setEventListeners() {
     super.setEventListeners();
     this._confirmButton.addEventListener("click", () => {

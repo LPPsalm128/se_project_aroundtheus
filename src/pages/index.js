@@ -1,7 +1,7 @@
 // Import files
 import "./index.css";
 import { initialCards, config, variables } from "../utils/constants.js";
-import Card from "../components/card.js";
+import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupWithImage from "../components/PopupWithImage.js";
@@ -103,8 +103,9 @@ api
     userInfo.setUserInfo({
       name: user.name,
       info: user.info,
-    }),
-      userInfo.setUserAvatar(user.avatar);
+      _id: user._id, // Pass the user ID here
+    });
+    userInfo.setUserAvatar(user.avatar);
   })
   .catch((err) => {
     console.error(err);
@@ -120,8 +121,8 @@ function createCard(cardData) {
     cardData,
     variables.cardSelector,
     handleImageClick,
-    handleDeleteCard,
-    handleLikeClick
+    handleLikeClick,
+    handleDeleteCard
   );
   return card.getView();
 }
@@ -183,17 +184,15 @@ function handleImageClick(cardData) {
   previewImagePopup.open(cardData);
 }
 
-function handleDeleteCard(cardId) {
+function handleDeleteCard(card) {
   modalWithConfirm.open();
   modalWithConfirm.setConfirmCallback(() => {
     modalWithConfirm.renderLoading(true);
-    console.log(modalWithConfirm);
-    console.log(modalWithConfirm.renderLoading);
     api
-      .deleteCard(cardId)
+      .deleteCard(card.getId()) // <-- Pass only the card ID here
       .then(() => {
-        //card.modalWithConfirm();
         modalWithConfirm.close();
+        card.getView().remove(); // Optionally remove the card from the DOM
       })
       .catch((err) => {
         console.error("Error deleting card:", err);
@@ -205,10 +204,13 @@ function handleDeleteCard(cardId) {
 }
 
 function handleLikeClick(card) {
+  const isLiked = card.isLiked(userInfo.getUserId()); // You need to implement getUserId() in UserInfo
+  const cardId = card.getId();
+
   api
-    .setCardLikes(cardId, isLiked)
+    .likeCard(cardId, isLiked)
     .then((newCardData) => {
-      card.updateLikes(newCardData.isLiked);
+      card.updateLikes(newCardData.likes);
     })
     .catch((err) => {
       console.log("Failed to update card likes status:", err);
@@ -230,9 +232,14 @@ variables.addNewCardButton.addEventListener("click", () => {
   addCardModal.open();
 });
 
-document.getElementById("modal-close-button").addEventListener("click", () => {
-  modalWithConfirm.close();
-});
+const deleteButton = document.querySelector(".modal_button-delete");
+if (deleteButton) {
+  deleteButton.addEventListener("click", () => {
+    modalWithConfirm.close();
+    cardElement.remove();
+    cardElement = null;
+  });
+}
 
 editProfileModal.setEventListeners();
 addCardModal.setEventListeners();

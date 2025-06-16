@@ -65,15 +65,6 @@ class Api {
       .catch(this._handleError);
   }
 
-  dislikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: "DELETE",
-      headers: this._headers,
-    })
-      .then(this._handleResponse)
-      .catch(this._handleError);
-  }
-
   setUserInfo({ name, info }) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
