@@ -1,5 +1,3 @@
-import { _ } from "core-js";
-
 class Card {
   constructor(
     cardData,
@@ -10,12 +8,12 @@ class Card {
   ) {
     this._name = cardData.name;
     this._link = cardData.link;
-    this._id = cardData._id; // Store card ID
-    this._likes = cardData.likes || []; // Store likes array
+    this._id = cardData._id;
+    this._likes = cardData.likes || [];
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteCard = handleDeleteCard;
-    this._handleLikeClick = handleLikeClick;
+    this._handleLikeClick = handleLikeClick; // external handler
   }
 
   _getTemplate() {
@@ -27,7 +25,6 @@ class Card {
     return cardElement;
   }
 
-  // Returns true if the card is liked by the current user
   isLiked(currentUserId) {
     return (
       Array.isArray(this._likes) &&
@@ -35,38 +32,39 @@ class Card {
     );
   }
 
-  // Returns the card's ID
   getId() {
     return this._id;
   }
 
-  // Updates the likes array and UI
-  updateLikes(newLikes) {
-    this._likes = newLikes;
-    const likeCount = this._cardElement.querySelector(".card__like-count");
-    if (likeCount) {
-      likeCount.textContent = this._likes.length;
+  updateLikes(isLiked, currentUserId) {
+    this._likes = isLiked ? [{ _id: currentUserId }] : [];
+    const likeButton = this._cardElement.querySelector(".card__like-button");
+    if (isLiked) {
+      likeButton.classList.add("card__like-button_active");
+    } else {
+      likeButton.classList.remove("card__like-button_active");
     }
-    // Optionally update the like button's active state here
   }
 
-  // Set Eventlisteners
-  //Like Button
+  remove() {
+    if (this._cardElement) {
+      this._cardElement.remove();
+    }
+  }
+
   _setEventListeners() {
     this._cardElement
       .querySelector(".card__like-button")
       .addEventListener("click", () => {
-        this._handleLikeClick(this); // Pass the card instance
+        this._handleLikeClick(this); // calls external handler
       });
 
-    //Delete Button
     this._cardElement
       .querySelector(".card__delete")
       .addEventListener("click", () => {
-        this._handleDeleteCard(this); // Pass the card instance
+        this._handleDeleteCard(this);
       });
 
-    //Card Image
     this._cardElement
       .querySelector(".card__image")
       .addEventListener("click", () => {
@@ -74,25 +72,23 @@ class Card {
       });
   }
 
-  // private methods for like and delete button handlers
-  _handleLikeClick() {
-    this._cardElement
-      .querySelector(".card__like-button")
-      .classList.toggle("card__like-button_active");
-  }
-
-  //public method to return card
-  getView() {
+  getView(currentUserId) {
     this._cardElement = this._getTemplate();
 
-    // Populate the card with image and title with provided data
     const cardImage = this._cardElement.querySelector(".card__image");
     const cardTitle = this._cardElement.querySelector(".card__title");
     cardImage.src = this._link;
     cardImage.alt = this._name;
     cardTitle.textContent = this._name;
 
-    // Invoke EventListeners
+    // Set initial like button state
+    const likeButton = this._cardElement.querySelector(".card__like-button");
+    if (this.isLiked(currentUserId)) {
+      likeButton.classList.add("card__like-button_active");
+    } else {
+      likeButton.classList.remove("card__like-button_active");
+    }
+
     this._setEventListeners();
 
     return this._cardElement;

@@ -6,13 +6,13 @@ class Section {
   }
 
   renderItems() {
-    this._initialArray.forEach((items) => {
-      this.addItem(this._renderer(items));
+    this._initialArray.forEach((item) => {
+      this.addItem(this._renderer(item));
     });
   }
 
-  addItem(cardElement, method = "prepend") {
-    this._container[method](cardElement);
+  addItem(element) {
+    this._container.prepend(element);
   }
 }
 

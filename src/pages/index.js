@@ -75,48 +75,35 @@ const modalWithConfirm = new PopupWithConfirmation("#delete-card-modal");
 let section;
 
 api
-  .getInitialCards()
-  .then((cards) => {
+  .getCardAndUserInfo()
+  .then(([user, cards]) => {
+    // Set user info and avatar
+    userInfo.setUserInfo({
+      name: user.name,
+      info: user.info,
+      _id: user._id,
+    });
+    userInfo.setUserAvatar(user.avatar);
+
+    // Create and render the section with cards
     section = new Section(
       {
         items: cards,
         renderer: (cardData) => {
-          const cardElement = createCard(cardData);
-          renderCard(cardData);
-          section.addItem(cardElement);
+          return createCard(cardData, userInfo.getUserId());
         },
       },
       ".cards__list"
     );
-    console.log(cards);
     section.renderItems(cards);
   })
   .catch((err) => {
     console.error(err);
   });
 
-// API
-
-api
-  .getUserInfo()
-  .then((user) => {
-    userInfo.setUserInfo({
-      name: user.name,
-      info: user.info,
-      _id: user._id, // Pass the user ID here
-    });
-    userInfo.setUserAvatar(user.avatar);
-  })
-  .catch((err) => {
-    console.error(err);
-  });
-
 // Functions
-function renderCard(cardElement) {
-  variables.cardsWrap.append(cardElement);
-}
 
-function createCard(cardData) {
+function createCard(cardData, currentUserId) {
   const card = new Card(
     cardData,
     variables.cardSelector,
@@ -124,7 +111,7 @@ function createCard(cardData) {
     handleLikeClick,
     handleDeleteCard
   );
-  return card.getView();
+  return card.getView(currentUserId);
 }
 
 function handleProfileFormSubmit(inputValues) {
@@ -162,14 +149,12 @@ function handleAvatarFormSubmit(avatar) {
 
 function handleProfileFormCreate(inputData) {
   const { name, link } = inputData;
-  console.log(inputData);
   addCardModal.renderLoading(true);
   api
     .createCard({ name, link })
     .then((newCard) => {
-      renderCard(newCard);
-      console.log(newCard);
-      createCard(newCard);
+      // Use section.addItem to add the new card to the DOM
+      section.addItem(createCard(newCard, userInfo.getUserId()));
       variables.addCardFormElement.reset();
       addCardModal.close();
       formValidators.addCard.resetValidation();
@@ -177,7 +162,8 @@ function handleProfileFormCreate(inputData) {
     })
     .catch((err) => {
       console.error("Error loading new card:", err);
-    });
+    })
+    .finally(() => addCardModal.renderLoading(false));
 }
 
 function handleImageClick(cardData) {
@@ -189,12 +175,15 @@ function handleDeleteCard(card) {
   modalWithConfirm.setConfirmCallback(() => {
     modalWithConfirm.renderLoading(true);
     api
-      .deleteCard(card.getId()) // <-- Pass only the card ID here
+      .deleteCard(card.getId())
       .then(() => {
         modalWithConfirm.close();
-        card.getView().remove(); // Optionally remove the card from the DOM
+        card.remove();
       })
       .catch((err) => {
+        if (err === "Error: 404") {
+          card.remove();
+        }
         console.error("Error deleting card:", err);
       })
       .finally(() => {
@@ -204,13 +193,13 @@ function handleDeleteCard(card) {
 }
 
 function handleLikeClick(card) {
-  const isLiked = card.isLiked(userInfo.getUserId()); // You need to implement getUserId() in UserInfo
+  const isLiked = card.isLiked(userInfo.getUserId());
   const cardId = card.getId();
 
   api
-    .likeCard(cardId, isLiked)
+    .likeCard(card.getId(), card.isLiked(userInfo.getUserId()))
     .then((newCardData) => {
-      card.updateLikes(newCardData.likes);
+      card.updateLikes(newCardData.isLiked, userInfo.getUserId());
     })
     .catch((err) => {
       console.log("Failed to update card likes status:", err);
