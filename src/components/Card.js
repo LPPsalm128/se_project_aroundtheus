@@ -1,9 +1,19 @@
-export default class Card {
-  constructor(cardData, cardSelector, handleImageClick) {
+class Card {
+  constructor(
+    cardData,
+    cardSelector,
+    handleImageClick,
+    handleLikeClick,
+    handleDeleteCard
+  ) {
     this._name = cardData.name;
     this._link = cardData.link;
+    this._id = cardData._id;
+    this._likes = cardData.likes || [];
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteCard = handleDeleteCard;
+    this._handleLikeClick = handleLikeClick; // external handler
   }
 
   _getTemplate() {
@@ -15,23 +25,46 @@ export default class Card {
     return cardElement;
   }
 
-  // Set Eventlisteners
-  //Like Button
+  isLiked(currentUserId) {
+    return (
+      Array.isArray(this._likes) &&
+      this._likes.some((user) => user._id === currentUserId)
+    );
+  }
+
+  getId() {
+    return this._id;
+  }
+
+  updateLikes(isLiked, currentUserId) {
+    this._likes = isLiked ? [{ _id: currentUserId }] : [];
+    const likeButton = this._cardElement.querySelector(".card__like-button");
+    if (isLiked) {
+      likeButton.classList.add("card__like-button_active");
+    } else {
+      likeButton.classList.remove("card__like-button_active");
+    }
+  }
+
+  remove() {
+    if (this._cardElement) {
+      this._cardElement.remove();
+    }
+  }
+
   _setEventListeners() {
     this._cardElement
       .querySelector(".card__like-button")
       .addEventListener("click", () => {
-        this._handleLikeIcon();
+        this._handleLikeClick(this); // calls external handler
       });
 
-    //Delete Button
     this._cardElement
       .querySelector(".card__delete")
       .addEventListener("click", () => {
-        this._handleDeleteCard();
+        this._handleDeleteCard(this);
       });
 
-    //Card Image
     this._cardElement
       .querySelector(".card__image")
       .addEventListener("click", () => {
@@ -39,32 +72,27 @@ export default class Card {
       });
   }
 
-  // private methods for like and delete button handlers
-  _handleLikeIcon() {
-    this._cardElement
-      .querySelector(".card__like-button")
-      .classList.toggle("card__like-button_active");
-  }
-
-  _handleDeleteCard() {
-    this._cardElement.remove();
-    this._cardElement = null;
-  }
-
-  //public method to return card
-  getView() {
+  getView(currentUserId) {
     this._cardElement = this._getTemplate();
 
-    // Populate the card with image and title with provided data
     const cardImage = this._cardElement.querySelector(".card__image");
     const cardTitle = this._cardElement.querySelector(".card__title");
     cardImage.src = this._link;
     cardImage.alt = this._name;
     cardTitle.textContent = this._name;
 
-    // Invoke EventListeners
+    // Set initial like button state
+    const likeButton = this._cardElement.querySelector(".card__like-button");
+    if (this.isLiked(currentUserId)) {
+      likeButton.classList.add("card__like-button_active");
+    } else {
+      likeButton.classList.remove("card__like-button_active");
+    }
+
     this._setEventListeners();
 
     return this._cardElement;
   }
 }
+
+export default Card;

@@ -18,11 +18,18 @@
       <header class="header page__section"></header>
       <main class="content">
         <section class="profile page__section">
-          <img
-            src="<%=require('./images/jacques-cousteau.jpg')%>"
-            alt="Avatar"
-            class="profile__avatar"
-          />
+          <div class="profile__avatar-container">
+            <img
+              src="<%=require('./images/jacques-cousteau.jpg')%>"
+              alt="Avatar"
+              class="profile__avatar"
+            />
+            <button
+              class="profile__edit-icon"
+              id="edit-profile-icon"
+              type="button"
+            ></button>
+          </div>
           <div class="profile__info">
             <h1 class="profile__header">Jacques Cousteau</h1>
             <button
@@ -84,7 +91,7 @@
     <!--Add Card Modal-->
     <div class="modal" id="add-card-modal">
       <div class="modal__container">
-        <button class="modal__close" id="modal-close-button"></button>
+        <button class="modal__close" id="add-card-modal-close"></button>
         <p class="modal__heading">New place</p>
         <form class="modal__form" id="add-card-form">
           <input
@@ -130,6 +137,48 @@
       </div>
     </div>
 
+    <!----Avatar Modal---->
+    <div class="modal" id="avatar-picture-modal">
+      <div class="modal__avatar-container">
+        <button class="modal__close" id="modal-close-button"></button>
+        <h2 class="modal__heading-avatar">Change profile picture</h2>
+        <form class="modal__form" id="avatar-form">
+          <input
+            type="url"
+            class="modal__input modal__input-avatar"
+            id="avatar"
+            name="avatar"
+            placeholder="Profile picture link"
+            required
+          />
+          <span class="modal__error" id="avatar-error"></span>
+          <button
+            type="submit"
+            class="modal__button modal__button-avatar"
+            aria-label="Save button"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Delete Card Modal -->
+    <div class="modal" id="delete-card-modal">
+      <div class="modal__delete-container">
+        <button class="modal__close" id="modal-close-button"></button>
+        <h2 class="modal__heading-delete">Are you sure?</h2>
+        <button
+          type="submit"
+          class="modal__button-delete"
+          aria-label="Delete button"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+
+    <!-----Card Template--->
     <template id="card-template">
       <li class="card">
         <img src="" alt="" class="card__image" />
