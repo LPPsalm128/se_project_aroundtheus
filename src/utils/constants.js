@@ -50,7 +50,7 @@ const variables = {
   modalImage: document.querySelector("#modal-image"),
   modalImageCaption: document.querySelector("#modal-caption"),
   imageModalCloseButton: document.querySelector("#modal-close-button"),
-  addCardModalCloseButton: document.querySelector("#modal-close-button"),
+  addCardModalCloseButton: document.querySelector("#add-card-modal-close"),
   cardTitleInput: document.querySelector("#title-input"),
   cardLinkInput: document.querySelector("#link-input"),
   modals: document.querySelectorAll(".modal"),
@@ -58,7 +58,7 @@ const variables = {
   profileParagraphInput: document.querySelector("#paragraph-input"),
   //profileImage: document.querySelector(".profile__avatar"),
   avatarEditButton: document.querySelector(".profile__avatar-container"),
-  avatarEditForm: document.querySelector("#avatar-picture-modal"),
+  avatarEditForm: document.querySelector("#avatar-form"),
 };
 
 export { initialCards, config, variables };

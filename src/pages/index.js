@@ -1,6 +1,6 @@
 // Import files
 import "./index.css";
-import { initialCards, config, variables } from "../utils/constants.js";
+import { config, variables } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -193,9 +193,6 @@ function handleDeleteCard(card) {
 }
 
 function handleLikeClick(card) {
-  const isLiked = card.isLiked(userInfo.getUserId());
-  const cardId = card.getId();
-
   api
     .likeCard(card.getId(), card.isLiked(userInfo.getUserId()))
     .then((newCardData) => {
@@ -230,6 +227,12 @@ if (deleteButton) {
   });
 }
 
+variables.addCardModalCloseButton.addEventListener("click", () => {
+  variables.addCardFormElement.reset();
+  formValidators.addCard.resetValidation();
+  addCardModal.close();
+});
+
 editProfileModal.setEventListeners();
 addCardModal.setEventListeners();
 previewImagePopup.setEventListeners();
@@ -238,6 +241,7 @@ modalWithConfirm.setEventListeners();
 variables.avatarEditButton.addEventListener("click", () => {
   avatarPopup.open();
   formValidators.avatarValidate.resetValidation();
+  variables.avatarEditForm.reset(); // This clears the form fields
 });
 
 enableValidation(config);
