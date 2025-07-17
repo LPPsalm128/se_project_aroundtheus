@@ -27,15 +27,14 @@
   height: 18px;
   border: none;
   margin-right: 18px;
-  transition: opacity 0.2s;
 }
 
 .card__like-button_active {
-  background: transparent url(../images/Union.svg) center no-repeat;
+  background-image: url(../images/Union.svg);
 }
 
 .card__like-button:hover {
-  opacity: 0.5;
+  opacity: #000 50%;
   cursor: pointer;
 }
 
