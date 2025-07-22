@@ -7,13 +7,13 @@ class Section {
 
   renderItems() {
     this._initialArray.forEach((item) => {
-      this.addItem(this._renderer(item));
+      const cardElement = this._renderer(item);
+      this.addItem(cardElement, "append");
     });
   }
 
-  addItem(element) {
-    this._container.prepend(element);
+  addItem(element, method = "prepend") {
+    this._container[method](element);
   }
 }
-
 export default Section;
