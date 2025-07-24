@@ -137,9 +137,9 @@ function handleAvatarFormSubmit(avatar) {
   api
     .setUserAvatar(avatar)
     .then((info) => {
-      console.log(info);
       userInfo.setUserAvatar(info.avatar);
       avatarPopup.close();
+      formValidators.avatarValidate.disableSubmitButton();
     })
     .catch((err) => {
       console.error("Error updating avatar:", err);
@@ -194,12 +194,12 @@ function handleDeleteCard(card) {
 
 function handleLikeClick(card) {
   api
-    .likeCard(card.getId(), card.isLiked(userInfo.getUserId()))
+    .likeCard(card.getId(), card.isLiked())
     .then((newCardData) => {
-      card.updateLikes(newCardData.isLiked, userInfo.getUserId());
+      card.updateLikes(newCardData.isLiked);
     })
     .catch((err) => {
-      console.log("Failed to update card likes status:", err);
+      console.error("Failed to update card like status:", err);
     });
 }
 
@@ -241,7 +241,7 @@ modalWithConfirm.setEventListeners();
 variables.avatarEditButton.addEventListener("click", () => {
   avatarPopup.open();
   formValidators.avatarValidate.resetValidation();
-  variables.avatarEditForm.reset(); // This clears the form fields
+  variables.avatarEditForm.reset();
 });
 
 enableValidation(config);

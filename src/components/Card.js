@@ -10,6 +10,7 @@ class Card {
     this._link = cardData.link;
     this._id = cardData._id;
     this._likes = cardData.likes || [];
+    this._isLiked = cardData.isLiked;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
     this._handleDeleteCard = handleDeleteCard;
@@ -25,20 +26,17 @@ class Card {
     return cardElement;
   }
 
-  isLiked(currentUserId) {
-    return (
-      Array.isArray(this._likes) &&
-      this._likes.some((user) => user._id === currentUserId)
-    );
+  isLiked() {
+    return this._isLiked;
   }
 
   getId() {
     return this._id;
   }
 
-  updateLikes(isLiked, currentUserId) {
-    this._likes = isLiked ? [{ _id: currentUserId }] : [];
+  updateLikes(isLiked) {
     const likeButton = this._cardElement.querySelector(".card__like-button");
+    this._isLiked = isLiked;
     if (isLiked) {
       likeButton.classList.add("card__like-button_active");
     } else {
@@ -72,7 +70,7 @@ class Card {
       });
   }
 
-  getView(currentUserId) {
+  getView() {
     this._cardElement = this._getTemplate();
 
     const cardImage = this._cardElement.querySelector(".card__image");
@@ -83,7 +81,7 @@ class Card {
 
     // Set initial like button state
     const likeButton = this._cardElement.querySelector(".card__like-button");
-    if (this.isLiked(currentUserId)) {
+    if (this._isLiked) {
       likeButton.classList.add("card__like-button_active");
     } else {
       likeButton.classList.remove("card__like-button_active");
