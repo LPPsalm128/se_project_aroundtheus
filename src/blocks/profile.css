@@ -33,8 +33,14 @@
 
 .profile__edit-icon:hover {
   background: url(../images/avatar-edit-icon.svg) center no-repeat;
-  opacity: 100%git;
   cursor: pointer;
+  opacity: 1;
+  background-color: rgba(
+    77,
+    77,
+    77,
+    0.5
+  ); /* Use RGB values for better compatibility */
 }
 
 .profile__info {

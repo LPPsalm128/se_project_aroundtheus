@@ -240,6 +240,8 @@ avatarPopup.setEventListeners();
 modalWithConfirm.setEventListeners();
 variables.avatarEditButton.addEventListener("click", () => {
   avatarPopup.open();
+  formValidators.avatarValidate.resetValidation();
+  variables.avatarEditForm.reset();
 });
 
 enableValidation(config);
